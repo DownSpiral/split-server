@@ -1,4 +1,26 @@
 Splist::Application.routes.draw do
+  get "user/getFriends"
+
+  post "user/makeFriendReq"
+
+  post "user/acceptFriendReq"
+
+  post "item/add"
+
+  post "item/edit"
+
+  post "item/delete"
+
+  get "item/getItems"
+
+  post "item/acceptShare"
+
+  get "item/getSharedItems"
+
+  get "user/getMyId"
+
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

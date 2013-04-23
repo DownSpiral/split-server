@@ -5,6 +5,8 @@ class CreateItems < ActiveRecord::Migration
       t.string :description
       t.integer :quantity
       t.integer :price
+      t.integer :owner
+      t.string :list
 
       t.timestamps
     end
