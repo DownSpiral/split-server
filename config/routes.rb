@@ -1,5 +1,5 @@
 Splist::Application.routes.draw do
-  get "user/getFriends"
+  post "user/getFriends"
 
   post "user/makeFriendReq"
 
@@ -11,17 +11,17 @@ Splist::Application.routes.draw do
 
   post "item/delete"
 
-  get "item/getItems"
+  post "item/getItems"
 
   post "item/acceptShare"
 
-  get "item/getSharedItems"
+  post "item/getSharedItems"
 
-  get "user/getMyId"
+  post "user/getMyId"
 
   post "tokens/create"
 
-  delete "tokens/delete"
+  post "tokens/delete"
 
   devise_for :users
 
