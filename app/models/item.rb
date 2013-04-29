@@ -9,8 +9,8 @@ class Item < ActiveRecord::Base
 
   	if params[:shared]
   	  for p in params[:shareFriends]
-  		@sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
-  		@sharedItem.save!
+  		  @sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
+  		  @sharedItem.save!
   	  end
   	end
   end
@@ -23,6 +23,8 @@ class Item < ActiveRecord::Base
     item.quantity = params[:quantity]
     item.list = params[:list]
     item.save!
+    if params[:shared] and ItemShared.find_by_item_id
+
   end
 
   def self.delete(params)
