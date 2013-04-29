@@ -19,7 +19,11 @@ Splist::Application.routes.draw do
 
   get "user/getMyId"
 
-  devise_for :users , :controllers => {:sessions => 'sessions'}
+  post "tokens/create"
+
+  delete "tokens/delete"
+
+  devise_for :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

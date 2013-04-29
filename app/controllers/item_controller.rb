@@ -1,5 +1,4 @@
 class ItemController < ApplicationController
-  before_filter :after_token_authentication
 
   def add
     params[:owner] = current_user.id
