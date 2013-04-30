@@ -1,22 +1,25 @@
 class Item < ActiveRecord::Base
-  attr_accessible :description, :name, :price, :quantity, :list
+  attr_accessible :description, :name, :price, :quantity, :list, :owner, :shared
   belongs_to :user
   has_many :shared_users, :foreign_key => "shared_item_id", :through => :item_shares
 
   def self.add(params)
-    @item = Item.create(params.slice(:owner, :name, :description, :quantity, :price, :list, :shared))
-  	@item.save!
+    item = Item.create(params.slice(:owner, :name, :description, :quantity, :price, :list, :shared))
+  	item.save!
 
-  	if params[:shared]
+  	if item.shared == true
   	  for p in params[:shareFriends]
-  		  @sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
-  		  @sharedItem.save!
+  		  sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
+  		  sharedItem.save!
   	  end
   	end
   end
 
   def self.edit(params)
     item = Item.find_by_id(params[:id])
+    if item == nil
+      return "Item does not exist"
+    end
     item.name = params[:name]
     item.price = params[:price]
     item.description = params[:description]
@@ -38,6 +41,7 @@ class Item < ActiveRecord::Base
     end
     item.shared = params[:shared]
     item.save!   
+    return "success"
   end
 
   def self.delete(params)
@@ -50,7 +54,9 @@ class Item < ActiveRecord::Base
     		end
 	    end
 	    item.destroy
+      return "success"
     end
+    return "Item does not exist"
   end
 
   def self.getItems(id)

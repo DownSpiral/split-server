@@ -6,9 +6,11 @@ class ItemShare < ActiveRecord::Base
   def self.acceptShare(i_id, u_id)
     sItem = ItemShare.find_by_item_id_and_user_id(i_id, u_id)
     if sItem != nil
-	  sItem.accepted = true
-	  sItem.save!
-	end
+  	  sItem.accepted = true
+  	  sItem.save!
+      return "success"
+	  end
+    return "Item does not exist"
   end
 
   def self.getSharedItems(u_id)

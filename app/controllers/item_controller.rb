@@ -3,14 +3,17 @@ class ItemController < ApplicationController
   def add
     params[:owner] = current_user.id
     Item.add(params)
+    render :json => {:status => "success"}
   end
 
   def edit
-    Item.edit(params)
+    result = Item.edit(params)
+    render :json => {:status => result}
   end
 
   def delete
-    Item.delete(params)
+    result = Item.delete(params)
+    render :json => {:status => result}
   end
 
   def getItems
@@ -19,7 +22,8 @@ class ItemController < ApplicationController
   end
 
   def acceptShare
-    ItemShare.acceptShare(params)
+    result = ItemShare.acceptShare(params)
+    render :json => {:status => result}
   end
 
   def getSharedItems
