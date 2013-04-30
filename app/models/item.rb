@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
   has_many :shared_users, :foreign_key => "shared_item_id", :through => :item_shares
 
   def self.add(params)
-    @item = Item.create(params.slice(:owner, :name, :description, :quantity, :price))
+    @item = Item.create(params.slice(:owner, :name, :description, :quantity, :price, :list, :shared))
   	@item.save!
 
   	if params[:shared]
@@ -22,9 +22,22 @@ class Item < ActiveRecord::Base
     item.description = params[:description]
     item.quantity = params[:quantity]
     item.list = params[:list]
-    item.save!
-    if params[:shared] and ItemShared.find_by_item_id
-
+    #If the item was shared and no longer is shared delete all the shared items
+    if item.shared and not params[:shared]
+      items = ItemShared.find_all_by_item_id(params[:id])
+      for i in items
+        i.destroy
+      end
+    end
+    #If the item was not shared and the user wants to share it add the shared items
+    if not item.shared and params[:shared]
+      for p in params[:shareFriends]
+        @sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
+        @sharedItem.save!
+      end
+    end
+    item.shared = params[:shared]
+    item.save!   
   end
 
   def self.delete(params)
@@ -32,11 +45,11 @@ class Item < ActiveRecord::Base
     if item != nil
       sItems = ItemShared.find_by_item_id(params[id])
       if sItems != nil
-		for i in sItems
-		  i.destroy	
-		end
-	  end
-	item.destroy
+    		for i in sItems
+    		  i.destroy	
+    		end
+	    end
+	    item.destroy
     end
   end
 
