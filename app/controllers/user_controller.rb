@@ -6,14 +6,16 @@ class UserController < ApplicationController
 
   def getFriends
   	result = Friendship.getFriends(current_user.id)
-    render :json => {:items => result}
+    render :json => {:friends => result}
   end
 
   def makeFriendReq
-  	return Friendship.requestFriendship(current_user.id, params[:id])
+  	result = Friendship.requestFriendship(current_user.id, params[:email])
+    render :json => {:status => result}
   end
 
   def acceptFriendReq
-  	Friendship.acceptFriendship(current_user.id, params[:id])
+  	result = Friendship.acceptFriendship(current_user.id, params[:email])
+    render :json => {:status => result}
   end
 end

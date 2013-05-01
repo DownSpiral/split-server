@@ -14,6 +14,16 @@ class ItemShare < ActiveRecord::Base
   end
 
   def self.getSharedItems(u_id)
-    return ItemShare.find_all_by_user_id(u_id)
+    shares = ItemShare.find_all_by_user_id(u_id)
+    itemList = []
+    if shares != nil
+      for s in shares
+        i = Item.find_by_item_id(s.item_id)
+        numSharing = ItemShared.count(:conditions => ["id == ?", i.id]) + 1
+        owner = User.find_by_item_id(i.id)
+        itemList.push({:id => i.id, :name => i.name, :price => i.price, :numSharing => numSharing, :shared => i.shared, :list => i.list, :owner => owner.id, :shareAccepted => s.accepted})
+      end
+    end
+    return itemList 
   end
 end

@@ -60,7 +60,14 @@ class Item < ActiveRecord::Base
   end
 
   def self.getItems(id)
-    return Item.find_all_by_owner(id)
+    items = Item.find_all_by_owner(id)
+    itemList = []
+    if items != nil
+      for i in items
+        numSharing = ItemShared.count(:conditions => ["id == ?", i.id]) + 1
+        itemList.push({:id => i.id, :name => i.name, :price => i.price, :numSharing => numSharing, :shared => i.shared, :list => i.list, :owner => i.owner})
+      end
+    end
+    return itemList 
   end
-
 end
