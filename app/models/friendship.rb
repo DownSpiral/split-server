@@ -58,8 +58,16 @@ class Friendship < ActiveRecord::Base
       else
         id = f.user1_id
       end
-      fr = User.find_by_id(id)
-      data.push({:id => fr.id, :name => fr.name, :email => fr.email, :accepted => f.accepted})
+      if id != nil
+        fr = User.find_by_id(id)
+        if f.user1_id == u_id
+          data.push({:id => fr.id, :name => fr.name, :email => fr.email, :accepted => f.accepted, :asker => "me")
+        else 
+          if f.user2_id == u_id
+            data.push({:id => fr.id, :name => fr.name, :email => fr.email, :accepted => f.accepted, :asker => "them"})
+          end
+        end
+      end
     end
     return data
   end

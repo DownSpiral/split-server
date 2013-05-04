@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
       sItems = ItemShared.find_by_item_id(params[id])
       if sItems != nil
     		for i in sItems
-    		  i.destroy	
+    		  i.destroy
     		end
 	    end
 	    item.destroy
@@ -64,10 +64,10 @@ class Item < ActiveRecord::Base
     itemList = []
     if items != nil
       for i in items
-        numSharing = ItemShared.count(:conditions => ["id == ?", i.id]) + 1
-        itemList.push({:id => i.id, :name => i.name, :price => i.price, :numSharing => numSharing, :shared => i.shared, :list => i.list, :owner => i.owner})
+        pplSharing = ItemShared.find_all_by_item_id(i.id)
+        itemList.push({:id => i.id, :name => i.name, :price => i.price, :pplSharing => pplSharing, :shared => i.shared, :list => i.list, :owner => i.owner})
       end
     end
-    return itemList 
+    return itemList
   end
 end
