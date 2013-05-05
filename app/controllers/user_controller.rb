@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-
+  respond_to :json
   def getMyId
   	render :json => {:id => current_user.id }
   end

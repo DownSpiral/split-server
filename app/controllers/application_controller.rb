@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery
-
+	respond_to :json
   private
 
 	# Override the default devise signin/signout process
