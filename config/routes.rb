@@ -5,6 +5,8 @@ Splist::Application.routes.draw do
 
   post "user/acceptFriendReq"
 
+  post "user/removeFriend"
+
   post "item/add"
 
   post "item/edit"

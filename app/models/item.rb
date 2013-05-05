@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
 
   	if item.shared == true
   	  for p in params[:shareFriends]
-  		  sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
+  		  sharedItem = ItemShare.create(:user_id => p, :item_id => @item.id, :accepted => false)
   		  sharedItem.save!
   	  end
   	end
@@ -27,7 +27,7 @@ class Item < ActiveRecord::Base
     item.list = params[:list]
     #If the item was shared and no longer is shared delete all the shared items
     if item.shared and not params[:shared]
-      items = ItemShared.find_all_by_item_id(params[:id])
+      items = ItemShare.find_all_by_item_id(params[:id])
       for i in items
         i.destroy
       end
@@ -35,7 +35,7 @@ class Item < ActiveRecord::Base
     #If the item was not shared and the user wants to share it add the shared items
     if not item.shared and params[:shared]
       for p in params[:shareFriends]
-        @sharedItem = ItemShared.create(:user_id => p, :item_id => @item.id, :accepted => false)
+        @sharedItem = ItemShare.create(:user_id => p, :item_id => @item.id, :accepted => false)
         @sharedItem.save!
       end
     end
@@ -47,7 +47,7 @@ class Item < ActiveRecord::Base
   def self.delete(params)
     item = Item.find_by_id(params[:id])
     if item != nil
-      sItems = ItemShared.find_by_item_id(params[id])
+      sItems = ItemShare.find_by_item_id(params[id])
       if sItems != nil
     		for i in sItems
     		  i.destroy
@@ -64,7 +64,7 @@ class Item < ActiveRecord::Base
     itemList = []
     if items != nil
       for i in items
-        pplSharing = ItemShared.find_all_by_item_id(i.id)
+        pplSharing = ItemShare.find_all_by_item_id(i.id)
         itemList.push({:id => i.id, :name => i.name, :price => i.price, :pplSharing => pplSharing, :shared => i.shared, :list => i.list, :owner => i.owner})
       end
     end

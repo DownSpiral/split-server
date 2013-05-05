@@ -45,6 +45,19 @@ class Friendship < ActiveRecord::Base
 	  end
   end
 
+  def self.deleteFriendship(my_id, their_id)
+    f = Friendship.find_by_user1_id_and_user2_id(my_id, their_id)
+    if f == nil
+      f = Friendship.find_by_user1_id_and_user2_id(their_id, my_id)
+    end
+
+    if f != nil
+      f.destroy
+      return "Friendship DESTROYED!"
+    end
+    return "You have no friend with id: " + their_id
+  end
+
   def self.getFriends(u_id)
     friends = Friendship.where("user1_id = ? OR user2_id = ?", u_id, u_id)
     if friends == nil
