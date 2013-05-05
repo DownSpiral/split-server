@@ -32,7 +32,7 @@ class TokensController  < ApplicationController
       render :status=>401, :json=>{:message=>"Invalid email or password."}
     else
       #items = Items.getItems(@user.id)
-      render :status=>200, :json=>{:token=>@user.authentication_token, :id=>@user.id}  #, :items=>items}
+      render :status=>200, :json=>{:token=>@user.authentication_token, :id=>@user.id, :message=>"success"}  #, :items=>items}
     end
   end
  
