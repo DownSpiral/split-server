@@ -15,7 +15,7 @@ class UserController < ApplicationController
   end
 
   def removeFriend
-    result = Friendship.deleteFreind(current_user.id, params[:friend_id])
+    result = Friendship.deleteFriendship(current_user.id, params[:friend_id])
     render :json => {:status => result}
   end
 
