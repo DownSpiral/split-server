@@ -22,7 +22,7 @@ class ItemController < ApplicationController
   end
 
   def acceptShare
-    result = ItemShare.acceptShare(params)
+    result = ItemShare.acceptShare(params[:item],current_user.id)
     render :json => {:status => result}
   end
 
