@@ -2,8 +2,8 @@ class ItemController < ApplicationController
 
   def add
     params[:owner] = current_user.id
-    Item.add(params)
-    render :json => {:status => "success"}
+    result = Item.add(params)
+    render :json => result
   end
 
   def edit

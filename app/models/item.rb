@@ -14,6 +14,7 @@ class Item < ActiveRecord::Base
   		  sharedItem.save!
   	  end
   	end
+    return {:name => params[:name], :list => params[:list], :id => item.id}
   end
 
   def self.edit(params)
