@@ -8,7 +8,8 @@ class Item < ActiveRecord::Base
   	item.save!
 
   	if item.shared == true
-  	  for p in params[:shareFriends]
+      friends = eval(params[:shareFriends])
+  	  for p in friends
   		  sharedItem = ItemShare.create(:user_id => p, :item_id => @item.id, :accepted => false)
   		  sharedItem.save!
   	  end
