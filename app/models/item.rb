@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
     itemId = Integer(params[:id])
     item = Item.find_by_id(itemId)
     if item != nil
-      sItems = ItemShare.find_all_by_item_id(params[id])
+      sItems = ItemShare.find_all_by_item_id(itemId)
       if sItems != nil
     		for i in sItems
     		  i.destroy
