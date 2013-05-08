@@ -23,7 +23,7 @@ class ItemShare < ActiveRecord::Base
         numSharing = 1
         for sItem in sharing
           if sItem.accepted
-            numShaing += 1
+            numSharing += 1
           end
         end
         itemList.push({:id => i.id, :name => i.name, :price => i.price, :numSharing => numSharing, :shared => i.shared, :list => i.list, :owner => i.owner, :shareAccepted => s.accepted})
