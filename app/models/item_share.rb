@@ -22,8 +22,8 @@ class ItemShare < ActiveRecord::Base
         sharing = ItemShare.find_all_by_item_id(i.id)
         numSharing = 1
         for sItem in sharing
-          if sItem.accepted == true
-            numShaing++
+          if sItem.accepted
+            numShaing += 1
           end
         end
         itemList.push({:id => i.id, :name => i.name, :price => i.price, :numSharing => numSharing, :shared => i.shared, :list => i.list, :owner => i.owner, :shareAccepted => s.accepted})
