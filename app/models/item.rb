@@ -47,9 +47,10 @@ class Item < ActiveRecord::Base
   end
 
   def self.delete(params)
-    item = Item.find_by_id(params[:id])
+    itemId = Integer(params[:id])
+    item = Item.find_by_id(itemId)
     if item != nil
-      sItems = ItemShare.find_by_item_id(params[id])
+      sItems = ItemShare.find_all_by_item_id(params[id])
       if sItems != nil
     		for i in sItems
     		  i.destroy
