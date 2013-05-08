@@ -23,6 +23,7 @@ class Friendship < ActiveRecord::Base
   	    return "Already requested to be friends"
       end      
     end
+    return "success"
   end
 
   def self.acceptFriendship(my_id, their_email)
